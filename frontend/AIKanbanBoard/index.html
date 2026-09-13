@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
+    <title>Taskora AI — Turn ideas into action, faster.</title>
+    <meta name="description" content="Taskora AI is an AI-native project management platform that transforms goals into prioritized work and helps teams ship faster." />
+    <meta name="application-name" content="Taskora AI" />
+    <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0D0E10" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="index, follow" />
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+            document.documentElement.classList.add("dark");
+          } else if (t === "light") {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Taskora AI" />
+    <meta property="og:title" content="Taskora AI — Turn ideas into action, faster." />
+    <meta property="og:description" content="Taskora AI is an AI-native project management platform that transforms goals into prioritized work and helps teams ship faster." />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Taskora AI — Turn ideas into action, faster." />
+    <meta name="twitter:description" content="Taskora AI is an AI-native project management platform that transforms goals into prioritized work and helps teams ship faster." />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,411 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Taskora AI — Midnight Ink + Champagne + Warm Ivory Design System
+   
+   Philosophy: 85-90% warm neutrals · 5-10% tonal surfaces · 1-3% champagne
+   The premium feeling comes from typography, whitespace, and composition —
+   not from gradients.
+
+   Type: Space Grotesk (display) + Inter (body)
+   Accent: Champagne / Brass  #B89B68
+   ============================================================================ */
+
+@theme {
+  /* ── Surfaces — Light Mode defaults ──────────────────────────────────── */
+  --color-bg:       #F6F3EC;  /* warm ivory page */
+  --color-surface:  #FCFBF7;  /* primary cards float on page */
+  --color-surface-2: #EFEBE2; /* tracks, chips, hover fills */
+  --color-elevated: #FFFFFF;  /* modals, dropdowns */
+  --color-line:     #DED9CF;  /* hairline borders */
+  --color-line-strong: #C9C2B5; /* stronger separation */
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --color-ink:   #171717;   /* primary text */
+  --color-muted: #68655F;   /* secondary text */
+  --color-faint: #929087;   /* placeholder, hints */
+
+  /* ── Accent — Champagne / Brass (use sparingly) ──────────────────────  */
+  --color-brand-50:  #F7F2E8;  /* lightest champagne tint — accent bg */
+  --color-brand-100: #EDE3CC;  /* light champagne */
+  --color-brand-300: #CABB8A;  /* medium champagne */
+  --color-brand-400: #C6AC7D;  /* accent hover */
+  --color-brand-500: #B89B68;  /* primary champagne accent */
+  --color-brand-600: #A38855;  /* deeper champagne */
+  --color-brand-700: #8F7954;  /* muted accent */
+
+  /* ── Status — muted, editorial (no neon) ────────────────────────────── */
+  --color-priority-low:    #5B8CA8;  /* muted slate blue */
+  --color-priority-medium: #C49A3C;  /* muted amber */
+  --color-priority-high:   #C4703A;  /* muted terracotta */
+  --color-priority-urgent: #BE4B56;  /* muted brick red */
+
+  /* ── Radius ──────────────────────────────────────────────────────────── */
+  --radius-xl:   1rem;
+  --radius-pill: 999px;
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display:
+    "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Shadows — Light Mode (warm neutral, not violet) ─────────────────  */
+  --shadow-card:
+    0 1px 2px rgba(23, 23, 23, 0.04),
+    0 1px 3px rgba(23, 23, 23, 0.03);
+  --shadow-soft:
+    0 6px 20px rgba(23, 23, 23, 0.07),
+    0 2px 6px rgba(23, 23, 23, 0.04);
+  --shadow-lift:
+    0 16px 40px rgba(23, 23, 23, 0.10),
+    0 4px 12px rgba(23, 23, 23, 0.05);
+  /* Champagne glow — reserved for primary buttons/accent elements */
+  --shadow-brand:
+    0 6px 20px rgba(184, 155, 104, 0.22);
+}
+
+/* ============================================================================
+   Dark Mode — both system preference and manual .dark class
+   ============================================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Surfaces */
+    --color-bg:          #0D0E10;
+    --color-surface:     #141518;
+    --color-surface-2:   #1A1B1E;
+    --color-elevated:    #202126;
+    --color-line:        #2A2B2F;
+    --color-line-strong: #3A3B3F;
+
+    /* Typography */
+    --color-ink:   #F4F1E9;
+    --color-muted: #AAA69D;
+    --color-faint: #77756F;
+
+    /* Brand tints for dark mode */
+    --color-brand-50:  #1F1D17;
+    --color-brand-100: #2C2820;
+
+    /* Shadows — in dark mode borders do the work, shadows are minimal */
+    --shadow-card:  0 1px 2px rgba(0, 0, 0, 0.18);
+    --shadow-soft:  0 4px 16px rgba(0, 0, 0, 0.30);
+    --shadow-lift:  0 12px 40px rgba(0, 0, 0, 0.44);
+    --shadow-brand: 0 4px 16px rgba(184, 155, 104, 0.12);
+  }
+}
+
+.dark {
+  --color-bg:          #0D0E10;
+  --color-surface:     #141518;
+  --color-surface-2:   #1A1B1E;
+  --color-elevated:    #202126;
+  --color-line:        #2A2B2F;
+  --color-line-strong: #3A3B3F;
+  --color-ink:         #F4F1E9;
+  --color-muted:       #AAA69D;
+  --color-faint:       #77756F;
+  --color-brand-50:    #1F1D17;
+  --color-brand-100:   #2C2820;
+  --shadow-card:  0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-soft:  0 4px 16px rgba(0, 0, 0, 0.30);
+  --shadow-lift:  0 12px 40px rgba(0, 0, 0, 0.44);
+  --shadow-brand: 0 4px 16px rgba(184, 155, 104, 0.12);
+}
+
+/* ============================================================================
+   Base
+   ============================================================================ */
+* {
+  border-color: var(--color-line);
+}
+
+/* Respect user motion preference (Settings → Reduce motion) */
+[data-reduce-motion="true"] *,
+[data-reduce-motion="true"] *::before,
+[data-reduce-motion="true"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv01", "cv02", "ss01";
+}
+
+/* Very subtle warm radial wash — keeps the ivory page alive without gradients.
+   In dark mode: tiny champagne whispers in the corners for warmth. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(52rem 36rem at 96% -12%, rgba(184, 155, 104, 0.05), transparent 65%),
+    radial-gradient(40rem 32rem at -8% 108%, rgba(184, 155, 104, 0.04), transparent 60%);
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    background:
+      radial-gradient(48rem 30rem at 96% -10%, rgba(184, 155, 104, 0.03), transparent 65%),
+      radial-gradient(36rem 28rem at -6% 105%, rgba(184, 155, 104, 0.025), transparent 60%);
+  }
+}
+.dark body::before {
+  background:
+    radial-gradient(48rem 30rem at 96% -10%, rgba(184, 155, 104, 0.03), transparent 65%),
+    radial-gradient(36rem 28rem at -6% 105%, rgba(184, 155, 104, 0.025), transparent 60%);
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* ── Scrollbars — warm neutral ────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 999px;
+  border: 2.5px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+  background-clip: padding-box;
+}
+
+/* ============================================================================
+   Component Layer
+   ============================================================================ */
+@layer components {
+  /* Glassmorphism — used for sticky navbar */
+  .glass {
+    background: color-mix(in oklab, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  /* Base card — warm ivory surface with hairline border */
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Shared form field styles */
+  .input-base {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    padding: 0.6rem 1rem;
+    color: var(--color-ink);
+    font-size: 0.875rem;
+    outline: none;
+    transition:
+      border-color 0.18s var(--ease-spring),
+      box-shadow 0.18s var(--ease-spring);
+  }
+  .input-base::placeholder {
+    color: var(--color-faint);
+  }
+  /* Champagne focus ring — subtle, not neon */
+  .input-base:focus {
+    border-color: color-mix(in oklab, var(--color-brand-500) 60%, transparent);
+    box-shadow: 0 0 0 3px rgba(184, 155, 104, 0.14);
+  }
+
+  .focus-ring:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-bg),
+      0 0 0 4px var(--color-brand-500);
+  }
+
+  /* ── brand-gradient ───────────────────────────────────────────────────
+     NOT a green gradient. A warm charcoal/graphite gradient used for:
+     icon medallions, featured KPI, AI promo card, auth aside, sidebar promo.
+     In light mode: warm dark charcoal for dramatic contrast on ivory page.
+     In dark mode: layered midnight graphite. */
+  .brand-gradient {
+    background-image: linear-gradient(145deg, #1C1A16 0%, #252119 55%, #302B22 100%);
+  }
+
+  /* ── Primary button — polarity-switching ─────────────────────────────
+     Light: deep graphite background + warm ivory text
+     Dark:  warm ivory background + deep graphite text */
+  .btn-primary {
+    background-color: #1C1A16;
+    color: #F6F3EC;
+    box-shadow: none;
+    transition:
+      background-color 0.18s var(--ease-spring),
+      box-shadow 0.18s var(--ease-spring);
+  }
+  .btn-primary:hover {
+    background-color: #2C2925;
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+/* Dark mode: brand-gradient and btn-primary polarity */
+@media (prefers-color-scheme: dark) {
+  .brand-gradient {
+    background-image: linear-gradient(145deg, #0D0E10 0%, #141518 50%, #1C1E22 100%);
+  }
+  .btn-primary {
+    background-color: #F4F1E9;
+    color: #171717;
+  }
+  .btn-primary:hover {
+    background-color: #FFFDF7;
+  }
+}
+.dark .brand-gradient {
+  background-image: linear-gradient(145deg, #0D0E10 0%, #141518 50%, #1C1E22 100%);
+}
+.dark .btn-primary {
+  background-color: #F4F1E9;
+  color: #171717;
+}
+.dark .btn-primary:hover {
+  background-color: #FFFDF7;
+}
+
+/* ============================================================================
+   Utility Layer
+   ============================================================================ */
+@layer utilities {
+  .animate-in {
+    animation: fade-in 0.24s var(--ease-spring) both;
+  }
+
+  /* Kept for backward compat — not used in redesigned hero */
+  .animate-gradient-pan {
+    background-size: 220% 220%;
+    animation: gradient-pan 14s ease-in-out infinite;
+  }
+
+  /* Self-drawing stroke animation for outline icons */
+  .icon-draw :is(path, line, polyline, polygon, circle, rect, ellipse) {
+    stroke: var(--trace-stroke, currentColor);
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+  }
+  .icon-draw.is-drawing :is(path, line, polyline, polygon, circle, rect, ellipse) {
+    animation: icon-draw 3s ease-in-out infinite;
+    animation-delay: var(--draw-delay, 0s);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .icon-draw :is(path, line, polyline, polygon, circle, rect, ellipse) {
+      stroke-dashoffset: 0;
+      animation: none;
+    }
+  }
+  [data-reduce-motion="true"] .icon-draw :is(path, line, polyline, polygon, circle, rect, ellipse) {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Tabular numbers — every metric & count */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Diagonal hatch — empty / no data chart bars */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--color-ink) 7%, transparent) 0 1.5px,
+      transparent 1.5px 7px
+    );
+  }
+
+  /* Text gradient — champagne/brass (restrained, for key headlines only) */
+  .text-gradient {
+    background-image: linear-gradient(135deg, #B89B68 0%, #D4B87A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ============================================================================
+   Keyframes
+   ============================================================================ */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+@keyframes icon-draw {
+  0%   { stroke-dashoffset: 120; }
+  40%  { stroke-dashoffset: 0; }
+  60%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -120; }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* ── Skeleton loader ──────────────────────────────────────────────────── */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-elevated) 80%, transparent),
+    transparent
+  );
+  animation: shimmer 1.6s infinite;
+}
