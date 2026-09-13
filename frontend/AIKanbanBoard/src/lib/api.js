@@ -5,20 +5,46 @@ export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
 import axios from "axios";
 
+const PRIMARY_API_URL = import.meta.env.VITE_API_URL || "http://localhost:5050/api";
+const FALLBACK_API_URL = import.meta.env.VITE_FALLBACK_API_URL || null;
+
+let currentBaseURL = PRIMARY_API_URL;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5050/api",
+  baseURL: currentBaseURL,
+  timeout: 15000,
 });
 
 api.interceptors.request.use((config) => {
+  config.baseURL = currentBaseURL;
   const token = getToken();
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// Normalize errors to a readable message; bounce to login on 401.
+// Normalize errors to a readable message; bounce to login on 401; auto-failover to fallback if primary fails.
 api.interceptors.response.use(
   (res) => res,
-  (error) => {
+  async (error) => {
+    const config = error.config;
+    const isNetworkOrServerError =
+      !error.response || [502, 503, 504].includes(error.response?.status) || error.code === "ECONNABORTED";
+
+    if (
+      isNetworkOrServerError &&
+      FALLBACK_API_URL &&
+      currentBaseURL !== FALLBACK_API_URL &&
+      config &&
+      !config._retryWithFallback
+    ) {
+      console.warn("Primary API unavailable. Switching to fallback backend:", FALLBACK_API_URL);
+      currentBaseURL = FALLBACK_API_URL;
+      api.defaults.baseURL = FALLBACK_API_URL;
+      config._retryWithFallback = true;
+      config.baseURL = FALLBACK_API_URL;
+      return api(config);
+    }
+
     const message =
       error.response?.data?.error || error.message || "Something went wrong";
     if (error.response?.status === 401 && getToken()) {
