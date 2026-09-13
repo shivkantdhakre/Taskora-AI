@@ -14,9 +14,19 @@ const userCanAccessBoard = async (userId, boardId) => {
 };
 
 const initSocket = (httpServer) => {
+  const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+    .split(",")
+    .map((u) => u.trim().replace(/\/+$/, ""));
+
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      origin: (origin, cb) => {
+        if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
+          cb(null, true);
+        } else {
+          cb(null, true);
+        }
+      },
       methods: ["GET", "POST"],
       credentials: true,
     },

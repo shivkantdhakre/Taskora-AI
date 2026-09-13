@@ -13,16 +13,26 @@ const { initSocket } = require("./src/socket");
 
 const app = express();
 
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((u) => u.trim().replace(/\/+$/, ""));
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, cb) => {
+      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
+        cb(null, true);
+      } else {
+        cb(null, true);
+      }
+    },
     credentials: true,
   })
 );
 app.use(express.json({ limit: "1mb" }));
 
 app.get("/", (_req, res) =>
-  res.json({ name: "AI Kanban Board API", status: "running" }),
+  res.json({ name: "Taskora AI API", status: "running" }),
 );
 app.use("/api", apiRoutes);
 
