@@ -1,0 +1,12 @@
+# Nixpacks configuration when root directory is set to /backend
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "node index.js"
